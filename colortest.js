@@ -1,5 +1,7 @@
-// Syntax is simple. Just run colortest.js
-// Code is simple but was taken from the Bitburner Discord and provided by Thatman
+// Syntax for use:
+// run colortest.js
+// Code is simple but was taken from the Bitburner Discord and provided by Thatman and modified slightly by me.
+// -Igabod
 /** @param {NS} ns */
 export async function main(ns) {
 
@@ -16,5 +18,6 @@ export async function main(ns) {
     }
     ns.tprint(col.bk + "black " + col.r + "red " + col.g + "green " + col.y + "yellow "
         + col.b + "blue " + col.m + "magenta " + col.c + "cyan " + col.w + "white " + col.d + "default")
+    ns.tprint("For more color options go to https://talyian.github.io/ansicolors/")
 
 }
