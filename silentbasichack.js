@@ -1,10 +1,7 @@
 // Syntax for using this script:
-// run silentbasichack.js (TargetNameHere) (coordinate x) (coordinate y) -t (ThreadCount)
-// e.g. run silentbasichack.js n00dles 2240 0 -t 500
-// will set the script to hack n00dles with 500 threads and position the tail window
-// all the way right and up on my admittedly large screen. For testing purposes you
-// may want to set that first number much lower and test that out then adjust it to
-// your own monitor size.
+// run silentbasichack.js (TargetNameHere) -t (ThreadCount)
+// e.g. run silentbasichack.js n00dles -t 500
+// will set the script to hack n00dles with 500 threads
 // -Igabod
 
 /** @param {NS} ns **/
