@@ -1,3 +1,4 @@
+// THIS SCRIPT IS OUT OF DATE. It has been replaced by basic-hack.js in the same repository where this one is located.
 // Syntax for using this script:
 // run silentbasichack.js (TargetNameHere) -t (ThreadCount)
 // e.g. run silentbasichack.js n00dles -t 500
