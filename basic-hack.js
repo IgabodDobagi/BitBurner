@@ -20,7 +20,7 @@ export async function main(ns) {
 	// of the cycle you are currently on plus the results line from the last phase completed.
 	// Default tail window size is 500, 500 in case you want to change it back. Or you could comment out the sleep and resizeTail
 	// lines to do away with it. Your choice.
-	ns.resizeTail(400, 250);
+	ns.resizeTail(450, 250);
 	
 	while (true) { // Begins the while loop.
 
@@ -36,9 +36,9 @@ export async function main(ns) {
 
 		// Begin the log output which displays all the relevant information. This is a single command multi-line print.
 		ns.print(
-`\x1b[37m========================================\x1b[0m
+`\x1b[37m==============================================\x1b[0m
 \x1b[37mHacking\x1b[31m ${target}\x1b[0m
-\x1b[37m========================================\x1b[0m
+\x1b[37m==============================================\x1b[0m
 \x1b[37mCash:\x1b[33m $${ns.nFormat(cashnow, "0.00a")} \x1b[37m/\x1b[38;5;11m $${ns.nFormat(maxcash, "0.00a")}\x1b[0m
 \x1b[37mSec:\x1b[36m ${ns.nFormat(secnow, "0.00a")}\x1b[37m /\x1b[38;5;14m ${ns.nFormat(minsec, "0.00a")}\x1b[0m
 \x1b[37m--------------------\x1b[0m`);
@@ -49,7 +49,7 @@ export async function main(ns) {
 			// Second line prints the info for how long the weaken action will take into the log.
 			ns.print('\x1b[31mWEAKENING \x1b[37mSTARTED: \x1b[31m' + ns.tFormat(weaktime, "t=") + '\x1b[37m.\x1b[0m');
 			// Third line just prints a division line of = symbols to make the log easier to read.
-			ns.print('\x1b[37m========================================\x1b[0m');
+			ns.print('\x1b[37m==============================================\x1b[0m');
 			// Fourth line does two things, it runs the weaken command and also displays the results from it.
 			ns.print(`\n\x1b[32mWEAKEN RESULTS: \x1b[36m${ns.nFormat(await ns.weaken(target), "0.00a")}\x1b[37m.\x1b[0m`);
 			// The Fifth line says that if the security doesn't need to be weakened we check to see if there is enough money to begin the hack.
@@ -58,7 +58,7 @@ export async function main(ns) {
 			// Sixth line prints the info for how long the grow action will take into the log.
 			ns.print('\x1b[31mGROW \x1b[37mSTARTED: \x1b[31m' + ns.tFormat(growtime, "t=") + '\x1b[37m.\x1b[0m');
 			// Seventh line is the same aesthetic division line as the third line.
-			ns.print('\x1b[37m========================================\x1b[0m');
+			ns.print('\x1b[37m==============================================\x1b[0m');
 			// Eighth line runs the grow command and then prints the results.
 			ns.print(`\n\x1b[32mGROW RESULTS: \x1b[33m${ns.nFormat(await ns.grow(target), "$0.00a")}\x1b[37m.\x1b[0m`);
 			// Ninth line basically says as long as we don't need to weaken or grow we move on to the hack action.
@@ -66,7 +66,7 @@ export async function main(ns) {
 			// Tenth line prints the info for how long the hack action will take into the log.
 			ns.print('\x1b[31mHACK \x1b[37mSTARTED: \x1b[31m' + ns.tFormat(hacktime, "t=") + '\x1b[37m.\x1b[0m');
 			// Eleventh line is more aesthetic division for readability.
-			ns.print('\x1b[37m========================================\x1b[0m');
+			ns.print('\x1b[37m==============================================\x1b[0m');
 			// Twelth line runs hack and prints the results in the log.
 			ns.print(`\n\x1b[32mHACK RESULTS: \x1b[33m${ns.nFormat(await ns.hack(target), "$0.00a")}\x1b[37m.\x1b[0m`);
 		}
