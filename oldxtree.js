@@ -1,3 +1,5 @@
+// Code originally from xsinx. He made some changes to it but this is the version I use currently. For the latest version
+// go to his github at https://github.com/xxxsinx/bitburner
 import { PrintTable, DefaultStyle, ColorPrint } from 'tables.js'
 
 /** @param {NS} ns */
