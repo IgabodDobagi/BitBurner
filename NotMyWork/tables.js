@@ -1,3 +1,5 @@
+// Code originally from xsinx. This is the version of tables.js that is required for the oldxtree.js I currently used. 
+// For the latest version go to xsinx's github at https://github.com/xxxsinx/bitburner
 const HEADER = 0;	// Index of the header styles
 const DIVIDER = 1	// Index of the horizontal divider style
 const FOOTER = 2;	// Index of the footer style
