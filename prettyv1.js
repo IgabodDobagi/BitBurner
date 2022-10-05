@@ -141,7 +141,7 @@ async function Exploit(ns, server, pct) {
 	}
 }
 
-// Uncomment this function and line 111 - 112 if you want a warning
+// Uncomment this function and line 116 - 117 if you want a warning
 // when you are able to hack harder targets or increase the difficulty of your current target.
 //function MemoryReport(ns) {
 //	let servers = RecursiveScan(ns);
