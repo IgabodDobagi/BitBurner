@@ -1,6 +1,7 @@
 // Script originally written by xsinx. I just made the tail window a little more
-// pleasing to look at and set the tail window to auto-resize so you only see one
-// phase of the cycle at a time. You can find the original script on xsinx's github
+// pleasing to look at for some people. You can find a less colorful version here
+// https://github.com/IgabodDobagi/BitBurner/blob/main/prettyv1.js
+// You can find the original script on xsinx's github
 // here https://github.com/xxxsinx/bitburner/blob/main/v1.js
 // -Igabod
 const MAX_SECURITY_DRIFT = 3;		// This is how far from minimum security we allow the server to be before weakening
@@ -120,8 +121,8 @@ async function Exploit(ns, server, pct) {
 			if (pids.length > 0 && pids.find(s => s != 0))
 				startedAnything = true;
 
-			if (hackedOnce)
-				MemoryReport(ns);
+//			if (hackedOnce)
+//				MemoryReport(ns);
 
 			ns.print(`${col.white}Waiting for script completion. (approx ${ns.tFormat(ns.getGrowTime(server))})${col.reset}`);
 			await WaitPids(ns, pids);
@@ -147,20 +148,20 @@ async function Exploit(ns, server, pct) {
 	}
 }
 
-function MemoryReport(ns) {
-	let servers = RecursiveScan(ns);
-	let free = 0;
-	let used = 0;
-	let total = 0;
-	for (const server of servers) {
-		total += ns.getServerMaxRam(server);
-		used += ns.getServerUsedRam(server);
-		free = total - used;
-	}
-	let pct = (free / total * 100).toFixed(2);
-	if (used / total < 0.85)
-		ns.print(`${col.dyellow}The full grow cycle for this hacking job is running with ${pct}% ram left. You could hack other servers, and/or increase the % hack of this server.${col.reset}`)
-}
+//function MemoryReport(ns) {
+//	let servers = RecursiveScan(ns);
+//	let free = 0;
+//	let used = 0;
+//	let total = 0;
+//	for (const server of servers) {
+//		total += ns.getServerMaxRam(server);
+//		used += ns.getServerUsedRam(server);
+//		free = total - used;
+//	}
+//	let pct = (free / total * 100).toFixed(2);
+//	if (used / total < 0.85)
+//		ns.print(`${col.dyellow}The full grow cycle for this hacking job is running with ${pct}% ram left. You could hack other servers, and/or increase the % hack of this server.${col.reset}`)
+//}
 
 // This function waits for one (or an array of) PID to stop running
 export async function WaitPids(ns, pids) {
