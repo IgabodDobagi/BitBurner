@@ -1,6 +1,6 @@
 const MAX_SECURITY_DRIFT = 3;		// This is how far from minimum security we allow the server to be before weakening
 const MAX_MONEY_DRIFT_PCT = 0.1;	// This is how far from 100% money we allow the server to be before growing (1-based percentage)
-const DEFAULT_PCT = 0.25;			// This is the default 1-based percentage of money we want to hack from the server in a single pass
+const DEFAULT_PCT = 0.50;			// This is the default 1-based percentage of money we want to hack from the server in a single pass
 const MIN_HOME_RAM = 32;			// Number of GBs we want to keep free on home
 
 let xpMode = false;
@@ -97,7 +97,7 @@ async function Exploit(ns, server, pct) {
 		// Check if security is above minimum
 		if ((xpMode || (sec > minSec + MAX_SECURITY_DRIFT)) && weakenThreads > 0) {
 			// We need to lower security
-			ns.print(`${col.magenta}WEAKENING${col.grey}: Security too high, we need ${(weakenThreads)} threads to floor it.${col.reset}`);
+			ns.print(`${col.magenta}WEAKENING${col.grey}: Security too high, need ${(weakenThreads)} threads to floor it.${col.reset}`);
 			let pids = await RunScript(ns, 'weaken-once.script', server, weakenThreads, hackedOnce);
 
 			if (pids.length > 0 && pids.find(s => s != 0))
@@ -108,7 +108,7 @@ async function Exploit(ns, server, pct) {
 		}
 		else if ((money < maxMoney - maxMoney * MAX_MONEY_DRIFT_PCT && growThreads > 0) || xpMode) {
 			// We need to grow the server
-			ns.print(`${col.green}GROWING${col.grey}: Money too low, we need ${(growThreads)} threads to max it.${col.reset}`);
+			ns.print(`${col.green}GROWING${col.grey}: Money too low, need ${(growThreads)} threads to max it.${col.reset}`);
 			let pids = await RunScript(ns, 'grow-once.script', server, growThreads, hackedOnce);
 
 			if (pids.length > 0 && pids.find(s => s != 0))
@@ -122,7 +122,7 @@ async function Exploit(ns, server, pct) {
 		}
 		else if (hackThreads > 0) {
 			// Server is ripe for hacking
-			ns.print(`${col.red}HACKING${col.grey}: Server ready to hack, hitting our target requires ${(hackThreads)} threads.${col.reset}`);
+			ns.print(`${col.red}HACKING${col.grey}: Server ready to hack, hitting it requires ${(hackThreads)} threads.${col.reset}`);
 			let pids = await RunScript(ns, 'hack-once.script', server, hackThreads, hackedOnce);
 
 			if (pids.length > 0 && pids.find(s => s != 0))
@@ -213,7 +213,7 @@ async function RunScript(ns, scriptName, target, threads, hackedOnce) {
 			await ns.scp(scriptName, server);
 
 		// Fire the script with as many threads as possible
-		ns.print(`${col.grey}Starting script ${scriptName} on ${col.yellow}${server} ${col.grey}with ${col.yellow}${possibleThreads} ${col.grey}threads.${col.reset}`);
+		ns.print(`${col.grey}Starting ${scriptName} on ${col.yellow}${server} ${col.grey}with ${col.yellow}${possibleThreads} ${col.grey}threads.${col.reset}`);
 		let pid = ns.exec(scriptName, server, possibleThreads, target);
 		if (pid == 0)
 			ns.print(`${col.dyellow}Could not start script ${scriptName} on ${server} with ${possibleThreads} threads.${col.reset}`);
