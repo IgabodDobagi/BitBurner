@@ -5,18 +5,19 @@ const MIN_HOME_RAM = 32;			// Number of GBs we want to keep free on home
 
 let xpMode = false;
 
-    const col = {
-        "red"    : "\x1b[31m",       // red
-        "green"  : "\x1b[32m",       // green
-        "blue"   : "\x1b[34m",       // blue
-        "cyan"   : "\x1b[36m",       // cyan
-		"dcyan"  : "\x1b[38;5;14",   // dark cyan
-        "magenta": "\x1b[35m",       // magenta
-        "yellow" : "\x1b[33m",       // yellow
-		"dyellow": "\x1b[38;5;11",   // dark yellow
-		"grey"   : "\x1b[38;5;245m", // medium grey
-        "reset"  : "\x1b[0m"         // default color
-	}
+const col = {
+	"red": "\x1b[31m",          // red
+	"green": "\x1b[32m",        // green
+	"blue": "\x1b[34m",         // blue
+	"cyan": "\x1b[36m",         // cyan
+	"dcyan": "\x1b[38;5;14m",   // dark cyan
+	"magenta": "\x1b[35m",      // magenta
+	"yellow": "\x1b[33m",       // yellow
+	"dyellow": "\x1b[38;5;11m", // dark yellow
+	"grey": "\x1b[38;5;245m",   // medium grey
+	"white": "\x1b[37m",        // white
+	"reset": "\x1b[0m"          // default color
+}
 
 
 /** @param {NS} ns **/
@@ -85,11 +86,11 @@ async function Exploit(ns, server, pct) {
 		// Report
 		ns.print('');
 		ns.print(`${col.blue}${(server)}${col.reset}`);
-		ns.print(`${col.grey}Money    : ${col.yellow}${ns.nFormat(money, "$0.000a")} ${col.grey}/ ${col.dyellow}${ns.nFormat(maxMoney, "$0.000a")} ${col.dcyan}(${(money / maxMoney * 100).toFixed(2)}%)${col.reset}`);
-		ns.print(`${col.grey}Security : ${col.cyan}${(sec - minSec).toFixed(2)}${col.reset}`);
-		ns.print(`${col.grey}Weaken   : ${col.magenta}${ns.tFormat(ns.getWeakenTime(server))} (t=${(weakenThreads)})${col.reset}`);
-		ns.print(`${col.grey}Grow     : ${col.green}${ns.tFormat(ns.getGrowTime(server))} (t=${(growThreads)})${col.reset}`);
-		ns.print(`${col.grey}Hack     : ${col.red}${ns.tFormat(ns.getHackTime(server))} (t=${(hackThreads)})${col.reset}`);
+		ns.print(`${col.white}Money    : ${col.yellow}${ns.nFormat(money, "$0.000a")} ${col.white}/ ${col.dyellow}${ns.nFormat(maxMoney, "$0.000a")} ${col.dcyan}(${(money / maxMoney * 100).toFixed(2)}%)${col.reset}`);
+		ns.print(`${col.white}Security : ${col.cyan}${(sec - minSec).toFixed(2)}${col.reset}`);
+		ns.print(`${col.white}Weaken   : ${col.magenta}${ns.tFormat(ns.getWeakenTime(server))} (t=${(weakenThreads)})${col.reset}`);
+		ns.print(`${col.white}Grow     : ${col.green}${ns.tFormat(ns.getGrowTime(server))} (t=${(growThreads)})${col.reset}`);
+		ns.print(`${col.white}Hack     : ${col.red}${ns.tFormat(ns.getHackTime(server))} (t=${(hackThreads)})${col.reset}`);
 		ns.print('');
 
 		let startedAnything = false;
@@ -97,18 +98,18 @@ async function Exploit(ns, server, pct) {
 		// Check if security is above minimum
 		if ((xpMode || (sec > minSec + MAX_SECURITY_DRIFT)) && weakenThreads > 0) {
 			// We need to lower security
-			ns.print(`${col.magenta}WEAKENING${col.grey}: Security too high, need ${(weakenThreads)} threads to floor it.${col.reset}`);
+			ns.print(`${col.magenta}WEAKENING${col.white}: Security too high, need ${(weakenThreads)} threads to floor it.${col.reset}`);
 			let pids = await RunScript(ns, 'weaken-once.script', server, weakenThreads, hackedOnce);
 
 			if (pids.length > 0 && pids.find(s => s != 0))
 				startedAnything = true;
 
-			ns.print(`${col.grey}Waiting for script completion. (approx  ${ns.tFormat(ns.getWeakenTime(server))})${col.reset}`);
+			ns.print(`${col.white}Waiting for script completion. (approx  ${ns.tFormat(ns.getWeakenTime(server))})${col.reset}`);
 			await WaitPids(ns, pids);
 		}
 		else if ((money < maxMoney - maxMoney * MAX_MONEY_DRIFT_PCT && growThreads > 0) || xpMode) {
 			// We need to grow the server
-			ns.print(`${col.green}GROWING${col.grey}: Money too low, need ${(growThreads)} threads to max it.${col.reset}`);
+			ns.print(`${col.green}GROWING${col.white}: Money too low, need ${(growThreads)} threads to max it.${col.reset}`);
 			let pids = await RunScript(ns, 'grow-once.script', server, growThreads, hackedOnce);
 
 			if (pids.length > 0 && pids.find(s => s != 0))
@@ -117,12 +118,12 @@ async function Exploit(ns, server, pct) {
 			if (hackedOnce)
 				MemoryReport(ns);
 
-			ns.print(`${col.grey}Waiting for script completion. (approx ${ns.tFormat(ns.getGrowTime(server))})${col.reset}`);
+			ns.print(`${col.white}Waiting for script completion. (approx ${ns.tFormat(ns.getGrowTime(server))})${col.reset}`);
 			await WaitPids(ns, pids);
 		}
 		else if (hackThreads > 0) {
 			// Server is ripe for hacking
-			ns.print(`${col.red}HACKING${col.grey}: Server ready to hack, hitting it requires ${(hackThreads)} threads.${col.reset}`);
+			ns.print(`${col.red}HACKING${col.white}: Server ready to hack, hitting it requires ${(hackThreads)} threads.${col.reset}`);
 			let pids = await RunScript(ns, 'hack-once.script', server, hackThreads, hackedOnce);
 
 			if (pids.length > 0 && pids.find(s => s != 0))
@@ -130,7 +131,7 @@ async function Exploit(ns, server, pct) {
 
 			hackedOnce = true;
 
-			ns.print(`${col.grey}Waiting for script completion. (approx ${ns.tFormat(ns.getHackTime(server))})${col.reset}`);
+			ns.print(`${col.white}Waiting for script completion. (approx ${ns.tFormat(ns.getHackTime(server))})${col.reset}`);
 			await WaitPids(ns, pids);
 		}
 
@@ -213,7 +214,7 @@ async function RunScript(ns, scriptName, target, threads, hackedOnce) {
 			await ns.scp(scriptName, server);
 
 		// Fire the script with as many threads as possible
-		ns.print(`${col.grey}Starting ${scriptName} on ${col.yellow}${server} ${col.grey}with ${col.yellow}${possibleThreads} ${col.grey}threads.${col.reset}`);
+		ns.print(`${col.white}Starting ${scriptName} on ${col.yellow}${server} ${col.white}with ${col.yellow}${possibleThreads} ${col.white}threads.${col.reset}`);
 		let pid = ns.exec(scriptName, server, possibleThreads, target);
 		if (pid == 0)
 			ns.print(`${col.dyellow}Could not start script ${scriptName} on ${server} with ${possibleThreads} threads.${col.reset}`);
